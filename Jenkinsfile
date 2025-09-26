@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'Make create'
+        sh 'python3 -V'
         sh 'which python3'
       }
     }
