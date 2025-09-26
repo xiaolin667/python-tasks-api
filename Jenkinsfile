@@ -4,8 +4,10 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'python3 -V'
-        sh 'which python3'
+        withPythonEnv('python3.8') { // Use pyenv to activate a specific version
+                        sh 'pip install -r requirements.txt'
+                        sh 'python my_script.py'
+                    }
       }
     }
   }
