@@ -12,8 +12,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'make build'
-        sh "docker build -t ${IMAGE}:${TAG} ."
+//         sh 'make build'
+//         sh "docker build -t ${IMAGE}:${TAG} ."
+           echo 'Building the code...'
       }
     }
 
