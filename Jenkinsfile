@@ -5,6 +5,8 @@ pipeline {
     IMAGE = 'tasks-api'
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
+    SONAR_TOKEN = 'squ_d1fac25b1450c20e973ce467fc792e6d47609e80'
+    DD_API_KEY = '394fd83372d3de0a7ca5f6403a0364b5'
   }
 
   stages {
@@ -26,6 +28,19 @@ pipeline {
               sh('pytest --junitxml=pytest-report.xml')
               junit 'pytest-report.xml'
         }
+      }
+    }
+
+    stage('Code Quality') {
+      steps {
+        sh """
+          sonar-scanner \
+            -Dsonar.projectKey=python-tasks-api \
+            -Dsonar.sources=app \
+            -Dsonar.tests=tests \
+            -Dsonar.host.url=${SONAR_HOST_URL} \
+            -Dsonar.login=${SONAR_TOKEN}
+        """
       }
     }
   }
