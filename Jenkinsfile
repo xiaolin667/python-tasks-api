@@ -4,10 +4,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        withPythonEnv('python3.11') { // Use pyenv to activate a specific version
-                        sh 'pip install -r requirements.txt'
-                        sh 'Make build'
-                    }
+        withPythonEnv('/Users/xiaolinsitu/Documents/Deakin/2_Professional_Practice_In_Info_Tech/Assignments/7.3HD/venv/bin'){
+                sh("which python3")            
+        }
       }
     }
   }
