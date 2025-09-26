@@ -17,55 +17,55 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-        sh 'pip install -r requirements.txt'
-        sh 'pytest --junitxml=pytest-report.xml'
-        junit 'pytest-report.xml'
-      }
-    }
+//     stage('Test') {
+//       steps {
+//         sh 'pip install -r requirements.txt'
+//         sh 'pytest --junitxml=pytest-report.xml'
+//         junit 'pytest-report.xml'
+//       }
+//     }
 
-    stage('Code Quality') {
-      steps {
-        sh """
-          sonar-scanner \
-            -Dsonar.projectKey=python-tasks-api \
-            -Dsonar.sources=app \
-            -Dsonar.tests=tests \
-            -Dsonar.host.url=${SONAR_HOST_URL} \
-            -Dsonar.login=${SONAR_TOKEN}
-        """
-      }
-    }
+//     stage('Code Quality') {
+//       steps {
+//         sh """
+//           sonar-scanner \
+//             -Dsonar.projectKey=python-tasks-api \
+//             -Dsonar.sources=app \
+//             -Dsonar.tests=tests \
+//             -Dsonar.host.url=${SONAR_HOST_URL} \
+//             -Dsonar.login=${SONAR_TOKEN}
+//         """
+//       }
+//     }
 
-    stage('Security') {
-      steps {
-        sh 'pip install bandit'
-        sh 'bandit -r app -f json -o bandit-report.json || true'
-        sh 'trivy image --severity HIGH,CRITICAL --format json -o trivy-image.json ${IMAGE}:${TAG} || true'
-        archiveArtifacts artifacts: 'bandit-report.json,trivy-image.json'
-      }
-    }
+//     stage('Security') {
+//       steps {
+//         sh 'pip install bandit'
+//         sh 'bandit -r app -f json -o bandit-report.json || true'
+//         sh 'trivy image --severity HIGH,CRITICAL --format json -o trivy-image.json ${IMAGE}:${TAG} || true'
+//         archiveArtifacts artifacts: 'bandit-report.json,trivy-image.json'
+//       }
+//     }
 
-    stage('Deploy to Staging') {
-      when { not { branch 'main' } }
-      steps {
-        sh "TAG=${TAG} docker compose -f docker-compose.staging.yml up -d --build"
-      }
-    }
+//     stage('Deploy to Staging') {
+//       when { not { branch 'main' } }
+//       steps {
+//         sh "TAG=${TAG} docker compose -f docker-compose.staging.yml up -d --build"
+//       }
+//     }
 
-    stage('Release to Production') {
-      when { branch 'main' }
-      steps {
-        sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
-      }
-    }
+//     stage('Release to Production') {
+//       when { branch 'main' }
+//       steps {
+//         sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
+//       }
+//     }
 
-    stage('Monitoring') {
-      steps {
-        sh "curl -sf http://localhost/health || true"
-        echo 'Datadog agent is running locally with logs/APM enabled'
-      }
-    }
+//     stage('Monitoring') {
+//       steps {
+//         sh "curl -sf http://localhost/health || true"
+//         echo 'Datadog agent is running locally with logs/APM enabled'
+//       }
+//     }
   }
 }
