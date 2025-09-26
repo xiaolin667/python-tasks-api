@@ -14,7 +14,7 @@ pipeline {
                 sh('Make build')
                 sh('echo $PATH')
                 sh('docker version')
-                // sh "docker build -t ${IMAGE}:${TAG} ."
+                sh "docker build -t ${IMAGE}:${TAG} ."
                 echo 'Building the code...'
         }         
       }
