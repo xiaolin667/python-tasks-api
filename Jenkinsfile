@@ -1,6 +1,14 @@
 pipeline {
   agent any
 
+  environment {
+    IMAGE = 'tasks-api'
+    TAG = "${env.BRANCH_NAME == 'main' ? 'latest' : env.BRANCH_NAME}"
+    SONAR_HOST_URL = 'http://localhost:9000'
+    SONAR_TOKEN = credentials('squ_d1fac25b1450c20e973ce467fc792e6d47609e80')   // create in Jenkins
+    DD_API_KEY = credentials('394fd83372d3de0a7ca5f6403a0364b5')    // create in Jenkins
+  }
+
   stages {
     stage('Build') {
       steps {
@@ -8,6 +16,8 @@ pipeline {
                 sh('Make create')
                 sh('Make install')
                 sh('Make build')
+                sh "docker build -t ${IMAGE}:${TAG} ."
+                echo 'Building the code...'
         }
       }
     }
