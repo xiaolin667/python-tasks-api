@@ -1,4 +1,4 @@
-Try AI directly in your favourite apps … Use Gemini to generate drafts and refine content, plus get Gemini Pro with access to Google's next-gen AI for $32.99 $0 for 1 month
+
 from flask import Flask, jsonify, request
 from app.storage import InMemoryDB
 from app.version import __version__
