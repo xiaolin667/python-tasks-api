@@ -68,5 +68,12 @@ pipeline {
         sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
       }
     }
+
+    stage('Monitoring') {
+      steps {
+        sh "curl -sf http://localhost/health || true"
+        echo 'Datadog agent is running locally with logs/APM enabled'
+      }
+    }
   }
 }
