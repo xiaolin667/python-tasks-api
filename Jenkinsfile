@@ -56,14 +56,14 @@ pipeline {
     }
 
     stage('Deploy to Staging') {
-      when { not { branch 'main' } }
+      // when { not { branch 'main' } }
       steps {
         sh "TAG=${TAG} docker compose -f docker-compose.staging.yml up -d --build"
       }
     }
 
     stage('Release to Production') {
-      when { branch 'main' }
+      // when { branch 'main' }
       steps {
         sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
       }
