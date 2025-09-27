@@ -65,8 +65,8 @@ pipeline {
     stage('Release to Production') {
       // when { branch 'main' }
       steps {
-        withCredentials([string(credentialsId: 'my-api-token', variable: 'DD_API_KEY')]) {
-          sh "TAG=latest DD_API_KEY=${datadog-api-key} docker compose -f docker-compose.prod.yml up -d --build"
+        withCredentials([string(credentialsId: 'datadog-api-key', variable: 'DD_API_KEY')]) {
+          sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
         }
       }
     }
