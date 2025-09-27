@@ -6,7 +6,7 @@ pipeline {
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
     SONAR_TOKEN = 'sqp_c461d108fd3c1f1432048045fb4847e099a31124'
-    DD_API_KEY = '394fd83372d3de0a7ca5f6403a0364b5'
+    DD_API_KEY = '06ae9f9ec59201d5ad2843d6a10e6f9fc6ecf92e'
   }
 
   stages {
