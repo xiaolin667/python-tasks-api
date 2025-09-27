@@ -1,6 +1,6 @@
 services:
   api:
-    image: tasks-api:${TAG:-latest}
+    image: tasks-api:main
     restart: always
     ports:
       - "80:5000"
