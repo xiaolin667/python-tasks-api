@@ -34,7 +34,7 @@ pipeline {
     stage('Code Quality') {
       steps {
         sh """
-          sonar-scanner \
+          /opt/homebrew/bin/sonar-scanner \
             -Dsonar.projectKey=python-tasks-api \
             -Dsonar.sources=app \
             -Dsonar.tests=tests \
