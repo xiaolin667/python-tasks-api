@@ -5,6 +5,7 @@ pipeline {
     IMAGE = 'tasks-api'
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
+    SONAR_TOKEN = 'sqp_c53fea7281e7e811b4b3dc46e1b9a2a353e01d89'
   }
 
   stages {
@@ -37,7 +38,7 @@ pipeline {
             -Dsonar.sources=app \
             -Dsonar.tests=tests \
             -Dsonar.host.url=${SONAR_HOST_URL} \
-            -Dsonar.login=${sonarque-token}
+            -Dsonar.login=${SONAR_TOKEN}
         """
       }
     }
