@@ -2,7 +2,7 @@ FROM python:3.11-slim
 WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH=/Users/xiaolinsitu/Documents/Deakin/2_Professional_Practice_In_Info_Tech/Assignments/7.3HD/python-tasks-api:$PYTHONPATH
+ENV PYTHONPATH=/Users/xiaolinsitu/Documents/Deakin/2_Professional_Practice_In_Info_Tech/Assignments/7.3HD/python-tasks-api
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
