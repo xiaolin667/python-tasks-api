@@ -5,8 +5,6 @@ pipeline {
     IMAGE = 'tasks-api'
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
-    SONAR_TOKEN = 'squ_d1fac25b1450c20e973ce467fc792e6d47609e80'
-    DD_API_KEY = '394fd83372d3de0a7ca5f6403a0364b5'
   }
 
   stages {
@@ -39,7 +37,7 @@ pipeline {
             -Dsonar.sources=app \
             -Dsonar.tests=tests \
             -Dsonar.host.url=${SONAR_HOST_URL} \
-            -Dsonar.login=${SONAR_TOKEN}
+            -Dsonar.login=${sonarque-token}
         """
       }
     }
@@ -65,7 +63,7 @@ pipeline {
     stage('Release to Production') {
       // when { branch 'main' }
       steps {
-        sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
+        sh "TAG=latest DD_API_KEY=${datadog-api-key} docker compose -f docker-compose.prod.yml up -d --build"
       }
     }
 
