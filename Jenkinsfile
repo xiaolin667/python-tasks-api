@@ -6,6 +6,7 @@ pipeline {
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
     SONAR_TOKEN = 'sqp_c461d108fd3c1f1432048045fb4847e099a31124'
+    DD_API_KEY = '394fd83372d3de0a7ca5f6403a0364b5'
   }
 
   stages {
@@ -64,7 +65,7 @@ pipeline {
     stage('Release to Production') {
       // when { branch 'main' }
       steps {
-        sh "TAG=latest DD_API_KEY=${datadog-api-key} docker compose -f docker-compose.prod.yml up -d --build"
+        sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
       }
     }
 
