@@ -11,7 +11,7 @@ services:
     image: gcr.io/datadoghq/agent:latest
     environment:
       - DD_API_KEY=${DD_API_KEY}
-      - DD_SITE=datadoghq.com
+      - DD_SITE=ap2.datadoghq.com
       - DD_LOGS_ENABLED=true
       - DD_APM_ENABLED=true
     volumes:
