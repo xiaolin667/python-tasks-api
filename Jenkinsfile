@@ -49,7 +49,7 @@ pipeline {
         withPythonEnv('/Users/xiaolinsitu/Documents/Deakin/2_Professional_Practice_In_Info_Tech/Assignments/7.3HD/venv/bin'){
           sh('pip install bandit')
           sh('bandit -r app -f json -o bandit-report.json || true')
-          sh('trivy image --severity HIGH,CRITICAL --format json -o trivy-image.json ${IMAGE}:${TAG} || true')
+          sh('/opt/homebrew/bin/trivy image --severity HIGH,CRITICAL --format json -o trivy-image.json ${IMAGE}:${TAG} || true')
           archiveArtifacts artifacts: 'bandit-report.json,trivy-image.json'
         }
       }
