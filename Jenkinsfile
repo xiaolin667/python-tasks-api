@@ -5,7 +5,7 @@ pipeline {
     IMAGE = 'tasks-api'
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
-    SONAR_TOKEN = 'sqp_c53fea7281e7e811b4b3dc46e1b9a2a353e01d89'
+    SONAR_TOKEN = 'sqp_c461d108fd3c1f1432048045fb4847e099a31124'
   }
 
   stages {
@@ -34,7 +34,7 @@ pipeline {
       steps {
         sh """
           /opt/homebrew/bin/sonar-scanner \
-            -Dsonar.projectKey=python-tasks-api \
+            -Dsonar.projectKey=tasks-api \
             -Dsonar.sources=app \
             -Dsonar.tests=tests \
             -Dsonar.host.url=${SONAR_HOST_URL} \
