@@ -5,6 +5,7 @@ pipeline {
     IMAGE = 'tasks-api'
     TAG = 'main'
     SONAR_HOST_URL = 'http://localhost:9000'
+    PYTHONPATH = '/Users/xiaolinsitu/Documents/Deakin/2_Professional_Practice_In_Info_Tech/Assignments/7.3HD/python-tasks-api'
   }
 
   stages {
@@ -58,7 +59,7 @@ pipeline {
     stage('Deploy to Staging') {
       // when { not { branch 'main' } }
       steps {
-        sh "TAG=${TAG} docker compose -f docker-compose.staging.yml up -d --build"
+        sh "TAG=${TAG} PYTHONPATH=${PYTHONPATH} docker compose -f docker-compose.staging.yml up -d --build"
       }
     }
 
@@ -66,7 +67,7 @@ pipeline {
       // when { branch 'main' }
       steps {
         withCredentials([string(credentialsId: 'datadog-api-key', variable: 'DD_API_KEY')]) {
-          sh "TAG=latest DD_API_KEY=${DD_API_KEY} docker compose -f docker-compose.prod.yml up -d --build"
+          sh "TAG=latest PYTHONPATH=${PYTHONPATH} docker compose -f docker-compose.prod.yml up -d --build"
         }
       }
     }
