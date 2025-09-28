@@ -1,6 +1,10 @@
 from flask import Flask, jsonify, request
 from app.storage import InMemoryDB
 from app.version import __version__
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 db = InMemoryDB()
 
@@ -67,6 +71,7 @@ def delete_task(task_id):
         return jsonify(status="deleted"), 200
     return jsonify(error="not found"), 404
 
+
 def create_app():
     app = Flask(__name__)
     app.add_url_rule('/', 'home', home)
@@ -77,8 +82,14 @@ def create_app():
     app.add_url_rule('/tasks/<username>', 'list_tasks', list_tasks, methods=['GET'])
     app.add_url_rule('/tasks/<task_id>', 'update_task', update_task, methods=['PUT'])
     app.add_url_rule('/tasks/<task_id>', 'delete_task', delete_task, methods=['DELETE'])
+
+    @app.before_request
+    def log_request_info():
+        logger.info(f"Request: {request.method} {request.path}")
+        
     return app
 
 if __name__ == '__main__':
     app = create_app()
     app.run(host="0.0.0.0", port=5000)
+
