@@ -86,7 +86,7 @@ def create_app():
     @app.before_request
     def log_request_info():
         logger.info(f"Request: {request.method} {request.path}")
-        
+
     return app
 
 if __name__ == '__main__':

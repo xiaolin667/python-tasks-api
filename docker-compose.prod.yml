@@ -6,7 +6,9 @@ services:
       - "8081:5000"
     environment:
       - FLASK_ENV=production
-
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "python", "service": "tasks-api"}]'
+      
   datadog:
     image: gcr.io/datadoghq/agent:latest
     environment:
