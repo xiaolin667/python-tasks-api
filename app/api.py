@@ -3,7 +3,13 @@ from app.storage import InMemoryDB
 from app.version import __version__
 import logging
 
-logging.basicConfig(level=logging.INFO)
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
 logger = logging.getLogger(__name__)
 
 db = InMemoryDB()
@@ -74,6 +80,9 @@ def delete_task(task_id):
 
 def create_app():
     app = Flask(__name__)
+    app.logger.handlers = logger.handlers
+    app.logger.setLevel(logging.INFO)
+
     app.add_url_rule('/', 'home', home)
     app.add_url_rule('/health', 'health', health, methods=['GET'])
     app.add_url_rule('/register', 'register', register, methods=['POST'])
@@ -86,6 +95,7 @@ def create_app():
     @app.before_request
     def log_request_info():
         logger.info(f"Request: {request.method} {request.path}")
+        sys.stdout.flush()
 
     return app
 
