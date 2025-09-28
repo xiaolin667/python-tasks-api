@@ -97,6 +97,11 @@ def create_app():
         logger.info(f"Request: {request.method} {request.path}")
         sys.stdout.flush()
 
+    @app.after_request
+    def log_response_info(response):
+        logger.info(f"Response: {response.status} for {request.method} {request.path}")
+        return response
+
     return app
 
 if __name__ == '__main__':
